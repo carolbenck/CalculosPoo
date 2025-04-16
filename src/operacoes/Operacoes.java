@@ -2,6 +2,9 @@ package operacoes;
 
 import javax.swing.*;
 import java.security.SecureRandom;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class Operacoes {
     public static double Desconto (double a, double b) {
@@ -30,20 +33,58 @@ public class Operacoes {
     }
     public static String GeradorSenha (int tamanho, JCheckBox maiusculas, JCheckBox minusculas, JCheckBox numeros, JCheckBox simbolos) {
         StringBuilder caracteres = new StringBuilder();
-
-        if (maiusculas.isSelected()) caracteres.append("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
-        if (minusculas.isSelected()) caracteres.append("abcdefghijklmnopqrstuvwxyz");
-        if (numeros.isSelected()) caracteres.append("0123456789");
-        if (simbolos.isSelected()) caracteres.append("!@#$%&*");
-
-        if (caracteres.length() == 0) return "Selecione ao menos uma opção";
-
         SecureRandom random = new SecureRandom();
-        StringBuilder senha = new StringBuilder();
+        List<Character> senhaTemp = new ArrayList<>();
+        int categoriasSelect = 0;
 
-        for (int i = 0; i < tamanho; i++) {
+        if (tamanho <= 0) {
+            JOptionPane.showMessageDialog(null, "Tamanho inválido", "Erro", JOptionPane.ERROR_MESSAGE);
+            return "";
+        }
+
+        if (maiusculas.isSelected()) categoriasSelect++;
+        if (minusculas.isSelected()) categoriasSelect++;
+        if (numeros.isSelected()) categoriasSelect++;
+        if (simbolos.isSelected()) categoriasSelect++;
+
+        if (categoriasSelect == 0) {
+            JOptionPane.showMessageDialog(null, "Selecione pelo menos uma opção", "Erro", JOptionPane.ERROR_MESSAGE);
+            return "";
+        }
+
+        if (tamanho < categoriasSelect) {
+            JOptionPane.showMessageDialog(null, "Tamanho mínimo: " + categoriasSelect, "Erro", JOptionPane.ERROR_MESSAGE);
+            return "";
+        }
+        if (maiusculas.isSelected()) {
+            String letrasMaiusculas = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+            caracteres.append(letrasMaiusculas);
+            senhaTemp.add(letrasMaiusculas.charAt(random.nextInt(letrasMaiusculas.length())));
+        }
+        if (minusculas.isSelected()) {
+            String letrasMinusculas = "abcdefghijklmnopqrstuvwxyz";
+            caracteres.append(letrasMinusculas);
+            senhaTemp.add(letrasMinusculas.charAt(random.nextInt(letrasMinusculas.length())));
+        }
+        if (numeros.isSelected()) {
+            String numerinhos = "0123456789";
+            caracteres.append(numerinhos);
+            senhaTemp.add(numerinhos.charAt(random.nextInt(numerinhos.length())));
+        }
+        if (simbolos.isSelected()) {
+            String simbolosEspeciais = "!@#$%&*";
+            caracteres.append(simbolosEspeciais);
+            senhaTemp.add(simbolosEspeciais.charAt(random.nextInt(simbolosEspeciais.length())));
+        }
+        while (senhaTemp.size() < tamanho) {
             int index = random.nextInt(caracteres.length());
-            senha.append(caracteres.charAt(index));
+            senhaTemp.add(caracteres.charAt(index));
+        }
+
+        Collections.shuffle(senhaTemp, random);
+        StringBuilder senha = new StringBuilder();
+        for (char c : senhaTemp) {
+            senha.append(c);
         }
 
         return senha.toString();

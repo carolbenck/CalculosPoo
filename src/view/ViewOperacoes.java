@@ -110,10 +110,33 @@ public class ViewOperacoes extends JFrame {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                double valor = Double.parseDouble(valorTxf.getText());
-                double desconto = Double.parseDouble(descTxf.getText());
-                double valorDesconto = Operacoes.Desconto(valor, desconto);
-                resultTxf.setText(" "+valorDesconto);
+                if (valorTxf.getText().isEmpty()){
+                    JOptionPane.showMessageDialog(valorTxf, "Campo Valor Inicial Obrigatório");
+                    valorTxf.requestFocus();
+                    return;
+                }
+                if (descTxf.getText().isEmpty()){
+                    JOptionPane.showMessageDialog(valorTxf, "Campo Desconto Obrigatório");
+                    descTxf.requestFocus();
+                    return;
+                }
+                try {
+                    double valor = Double.parseDouble(valorTxf.getText());
+                    double desconto = Double.parseDouble(descTxf.getText());
+                    if(valor <= 0){
+                        JOptionPane.showMessageDialog(null, "O campo Valor Inicial deve conter valores positivos!", "Erro", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+                    if (desconto< 0 || desconto > 100){
+                        JOptionPane.showMessageDialog(descTxf, "O desconto deve estar entre 0 e 100%", "Erro", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+                    double valorDesconto = Operacoes.Desconto(valor, desconto);
+                    resultTxf.setText(String.format("%.2f", valorDesconto));
+                }
+                catch (NumberFormatException e1) {
+                    JOptionPane.showMessageDialog( null, "Digite valores numéricos válidos!", "Erro", JOptionPane.ERROR_MESSAGE);
+                }
             }
         });
     }
@@ -174,13 +197,35 @@ public class ViewOperacoes extends JFrame {
         calc.setBorder(BorderFactory.createLineBorder(Color.GRAY, 1, true));
         add(calc);
         calc.addActionListener(new ActionListener() {
-
             @Override
             public void actionPerformed(ActionEvent e) {
-                double valor = Double.parseDouble(valorTxf.getText());
-                double acrescimo = Double.parseDouble(acrescimoTxf.getText());
-                double valorAcrescimo = Operacoes.Acrescimo(valor, acrescimo);
-                resultTxf.setText(" "+valorAcrescimo);
+                if (valorTxf.getText().isEmpty()){
+                    JOptionPane.showMessageDialog(valorTxf, "Campo Valor Inicial Obrigatório");
+                    valorTxf.requestFocus();
+                    return;
+                }
+                if (acrescimoTxf.getText().isEmpty()){
+                    JOptionPane.showMessageDialog(valorTxf, "Campo Acréscimo Obrigatório");
+                    acrescimoTxf.requestFocus();
+                    return;
+                }
+                try {
+                    double valor = Double.parseDouble(valorTxf.getText());
+                    double acrescimo = Double.parseDouble(acrescimoTxf.getText());
+                    if(valor <= 0){
+                        JOptionPane.showMessageDialog(null, "O campo Valor deve conter valores positivos!", "Erro", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+                    if(acrescimo<0 || acrescimo >100){
+                        JOptionPane.showMessageDialog(acrescimoTxf, "O acréscimo deve estar entre 0% e 100%", "Erro", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+                    double valorAcrescimo = Operacoes.Acrescimo(valor, acrescimo);
+                    resultTxf.setText(String.format("%.2f", valorAcrescimo));
+                }
+                catch (NumberFormatException e1) {
+                    JOptionPane.showMessageDialog(null, "Digite valores numéricos válidos!", "Erro", JOptionPane.ERROR_MESSAGE);
+                }
             }
         });
     }
@@ -245,10 +290,33 @@ public class ViewOperacoes extends JFrame {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                double valor = Double.parseDouble(totalTxf.getText());
-                double porcentagem = Double.parseDouble(porcentagemTxf.getText());
-                double valorCorrespondente = Operacoes.Amostragem1(valor, porcentagem);
-                resultTxf.setText(" "+valorCorrespondente);
+                if (totalTxf.getText().isEmpty()){
+                    JOptionPane.showMessageDialog(totalTxf, "Campo Total Obrigatorio");
+                    totalTxf.requestFocus();
+                    return;
+                }
+                if (porcentagemTxf.getText().isEmpty()){
+                    JOptionPane.showMessageDialog(porcentagemTxf, "Campo Porcentagem Obrigatorio");
+                    porcentagemTxf.requestFocus();
+                    return;
+                }
+                try {
+                    double valor = Double.parseDouble(totalTxf.getText());
+                    double porcentagem = Double.parseDouble(porcentagemTxf.getText());
+                    if(valor <= 0){
+                        JOptionPane.showMessageDialog(null, "O campo Total deve conter valores positivos!", "Erro", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+                    if (porcentagem < 0 || porcentagem > 100){
+                        JOptionPane.showMessageDialog(porcentagemTxf, "A porcentagem deve estar entre 0 e 100%", "Erro", JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
+                    double valorCorrespondente = Operacoes.Amostragem1(valor, porcentagem);
+                    resultTxf.setText(String.format("%.2f", valorCorrespondente));
+                }
+                catch (NumberFormatException e1) {
+                    JOptionPane.showMessageDialog(null, "Digite valores numéricos válidos!", "Erro", JOptionPane.ERROR_MESSAGE);
+                }
             }
         });
     }
@@ -311,10 +379,35 @@ public class ViewOperacoes extends JFrame {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                double total = Double.parseDouble(totalTxf.getText());
-                double parte = Double.parseDouble(parteTxf.getText());
-                double valorCorrespondente = Operacoes.Amostragem2(total, parte);
-                resultTxf.setText(String.format("%.2f", valorCorrespondente));
+                if (totalTxf.getText().isEmpty()){
+                    JOptionPane.showMessageDialog(totalTxf, "Campo Total Obrigatorio");
+                    totalTxf.requestFocus();
+                    return;
+                }
+                if (parteTxf.getText().isEmpty()){
+                    JOptionPane.showMessageDialog(parteTxf, "Campo Parte Obrigatorio");
+                    parteTxf.requestFocus();
+                    return;
+                }
+                try {
+                    double total = Double.parseDouble(totalTxf.getText());
+                    double parte = Double.parseDouble(parteTxf.getText());
+                    if(total <= 0){
+                        JOptionPane.showMessageDialog(totalTxf, "O campo Total deve conter valores positivos!", "Erro", JOptionPane.ERROR_MESSAGE);
+                        totalTxf.requestFocus();
+                        return;
+                    }
+                    if (parte <=0 ){
+                        JOptionPane.showMessageDialog(parteTxf, "O campo Parte deve conter valores positivos!", "Erro", JOptionPane.ERROR_MESSAGE);
+                        parteTxf.requestFocus();
+                        return;
+                    }
+                    double valorCorrespondente = Operacoes.Amostragem2(total, parte);
+                    resultTxf.setText(String.format("%.2f", valorCorrespondente));
+                }
+                catch (NumberFormatException e1) {
+                    JOptionPane.showMessageDialog(null, "Digite valores numéricos válidos!", "Erro", JOptionPane.ERROR_MESSAGE);
+                }
             }
         });
     }
@@ -377,10 +470,35 @@ public class ViewOperacoes extends JFrame {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                double total = Double.parseDouble(valorATxf.getText());
-                double parte = Double.parseDouble(pagueiBTxf.getText());
-                double valorDesconto = Operacoes.ValorA(total, parte);
-                resultTxf.setText(String.format("%.2f", valorDesconto));
+                if (valorATxf.getText().isEmpty()){
+                    JOptionPane.showMessageDialog(valorATxf, "Campo Valor Original Obrigatorio");
+                    valorATxf.requestFocus();
+                    return;
+                }
+                if (pagueiBTxf.getText().isEmpty()){
+                    JOptionPane.showMessageDialog(pagueiBTxf, "Campo Valor com Desconto Obrigatorio");
+                    pagueiBTxf.requestFocus();
+                    return;
+                }
+                try {
+                    double total = Double.parseDouble(valorATxf.getText());
+                    double parte = Double.parseDouble(pagueiBTxf.getText());
+                    if(total <= 0){
+                        JOptionPane.showMessageDialog(valorATxf, "O campo Valor Original deve conter valores positivos!", "Erro", JOptionPane.ERROR_MESSAGE);
+                        valorATxf.requestFocus();
+                        return;
+                    }
+                    if (parte <=0 ){
+                        JOptionPane.showMessageDialog(pagueiBTxf, "O campo Valor com Desconto deve conter valores positivos!", "Erro", JOptionPane.ERROR_MESSAGE);
+                        pagueiBTxf.requestFocus();
+                        return;
+                    }
+                    double valorDesconto = Operacoes.ValorA(total, parte);
+                    resultTxf.setText(String.format("%.2f", valorDesconto));
+                }
+                catch (NumberFormatException e1) {
+                    JOptionPane.showMessageDialog(null, "Digite valores numéricos válidos!", "Erro", JOptionPane.ERROR_MESSAGE);
+                }
             }
         });
     }
@@ -443,10 +561,35 @@ public class ViewOperacoes extends JFrame {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                double valorInicial = Double.parseDouble(valorInicialTxf.getText());
-                double valorFinal = Double.parseDouble(valorFinalTxf.getText());
-                double valorDiferenca = Operacoes.Delta(valorInicial, valorFinal);
-                resultTxf.setText(String.format("%.2f", valorDiferenca));
+                if (valorInicialTxf.getText().isEmpty()){
+                    JOptionPane.showMessageDialog(valorInicialTxf, "Campo Valor Inicial Obrigatorio");
+                    valorInicialTxf.requestFocus();
+                    return;
+                }
+                if (valorFinalTxf.getText().isEmpty()){
+                    JOptionPane.showMessageDialog(valorFinalTxf, "Campo Valor Final Obrigatorio");
+                    valorFinalTxf.requestFocus();
+                    return;
+                }
+                try {
+                    double valorInicial = Double.parseDouble(valorInicialTxf.getText());
+                    double valorFinal = Double.parseDouble(valorFinalTxf.getText());
+                    if(valorInicial <= 0){
+                        JOptionPane.showMessageDialog(valorInicialTxf, "O campo Valor Inicial deve conter valores positivos!", "Erro", JOptionPane.ERROR_MESSAGE);
+                        valorInicialTxf.requestFocus();
+                        return;
+                    }
+                    if (valorFinal <=0 ){
+                        JOptionPane.showMessageDialog(valorFinalTxf, "O campo Valor Final deve conter valores positivos!", "Erro", JOptionPane.ERROR_MESSAGE);
+                        valorFinalTxf.requestFocus();
+                        return;
+                    }
+                    double valorDiferenca = Operacoes.Delta(valorInicial, valorFinal);
+                    resultTxf.setText(String.format("%.2f", valorDiferenca));
+                }
+                catch (NumberFormatException e1) {
+                    JOptionPane.showMessageDialog(null, "Digite valores numéricos válidos!", "Erro", JOptionPane.ERROR_MESSAGE);
+                }
             }
         });
     }
@@ -510,10 +653,35 @@ public class ViewOperacoes extends JFrame {
 
             @Override
             public void actionPerformed(ActionEvent e) {
+                if (valorFinalTxf.getText().isEmpty()){
+                    JOptionPane.showMessageDialog(valorFinalTxf, "Campo Valor Final Obrigatorio");
+                    valorFinalTxf.requestFocus();
+                    return;
+                }
+                if (valorDescontoTxf.getText().isEmpty()){
+                    JOptionPane.showMessageDialog(valorDescontoTxf, "Campo Desconto Obrigatorio");
+                    valorDescontoTxf.requestFocus();
+                    return;
+                }
+                try {
                 double valorFinal = Double.parseDouble(valorFinalTxf.getText());
                 double valorDesconto = Double.parseDouble(valorDescontoTxf.getText());
+                if (valorFinal <= 0){
+                    JOptionPane.showMessageDialog(valorFinalTxf, "O campo Valor Final deve conter valores positivos!", "Erro", JOptionPane.ERROR_MESSAGE);
+                    valorFinalTxf.requestFocus();
+                    return;
+                }
+                if(valorDesconto < 0 || valorDesconto > 100){
+                    JOptionPane.showMessageDialog(valorDescontoTxf, "O desconto deve estar entre 0 e 100%", "Erro", JOptionPane.ERROR_MESSAGE);
+                    valorDescontoTxf.requestFocus();
+                    return;
+                }
                 double valorInicial = Operacoes.ValorOriginal(valorFinal, valorDesconto);
                 resultTxf.setText(String.format("%.2f", valorInicial));
+                }
+                catch (NumberFormatException e1) {
+                    JOptionPane.showMessageDialog(null, "Digite valores numéricos válidos!", "Erro", JOptionPane.ERROR_MESSAGE);
+                }
             }
         });
 
@@ -591,11 +759,46 @@ public class ViewOperacoes extends JFrame {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                double valorA = Double.parseDouble(aTxf.getText());
-                double valorB = Double.parseDouble(bTxf.getText());
-                double valorR1 = Double.parseDouble(r1Txf.getText());
-                double valorR2 = Operacoes.RegraTres(valorA, valorB, valorR1);
-                r2Txf.setText(String.format("%.2f", valorR2));
+                if (aTxf.getText().isEmpty()){
+                    JOptionPane.showMessageDialog(aTxf, "Campo A Obrigatorio");
+                    aTxf.requestFocus();
+                    return;
+                }
+                if (bTxf.getText().isEmpty()){
+                    JOptionPane.showMessageDialog(bTxf, "Campo B Obrigatorio");
+                    bTxf.requestFocus();
+                    return;
+                }
+                if (r1Txf.getText().isEmpty()){
+                    JOptionPane.showMessageDialog(r1Txf, "Campo R1 Obrigatorio");
+                    r1Txf.requestFocus();
+                    return;
+                }
+                try {
+                    double valorA = Double.parseDouble(aTxf.getText());
+                    double valorB = Double.parseDouble(bTxf.getText());
+                    double valorR1 = Double.parseDouble(r1Txf.getText());
+                    if (valorA <= 0){
+                        JOptionPane.showMessageDialog(aTxf, "O campo A deve conter valores positivos!", "Erro", JOptionPane.ERROR_MESSAGE);
+                        aTxf.requestFocus();
+                        return;
+                    }
+                    if(valorB <= 0){
+                        JOptionPane.showMessageDialog(bTxf, "O campo B deve conter valores positivos!", "Erro", JOptionPane.ERROR_MESSAGE);
+                        bTxf.requestFocus();
+                        return;
+                    }
+                    if(valorR1 <= 0){
+                        JOptionPane.showMessageDialog(r1Txf, "O campo R1 deve conter valores positivos!", "Erro", JOptionPane.ERROR_MESSAGE);
+                        r1Txf.requestFocus();
+                        return;
+                    }
+                    double valorR2 = Operacoes.RegraTres(valorA, valorB, valorR1);
+                    r2Txf.setText(String.format("%.2f", valorR2));
+                }
+                catch (NumberFormatException e1){
+                    JOptionPane.showMessageDialog(null, "Digite valores numéricos válidos!", "Erro", JOptionPane.ERROR_MESSAGE);
+                }
             }
         });
     }
